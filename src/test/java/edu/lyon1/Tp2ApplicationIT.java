@@ -12,5 +12,4 @@ public class Tp2ApplicationIT {
 	@Test
 	public void contextLoads() {
 	}
-
 }
