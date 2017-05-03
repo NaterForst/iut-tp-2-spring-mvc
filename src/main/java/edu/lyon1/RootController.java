@@ -37,8 +37,29 @@ public class RootController {
         return mav;
     }
 
+    @RequestMapping(value="/user",method = RequestMethod.GET)
+    public ModelAndView test(HttpServletRequest request, @RequestHeader HttpHeaders headers){
+        ModelAndView mav = new ModelAndView();
+        mav.addObject("titre", "IUT");
+        mav.addObject("corps", "bonjour");
+        mav.addObject("headers_etape2",headers.keySet());
+
+        mav.setViewName("template");
+        List<HttpHeader> listHeader = new ArrayList<>();
+        HttpHeader toto = new HttpHeader("value","name");
+        mav.addObject("htpheader", toto.getValue());
+        for (Map.Entry<String, List<String>> entry : headers.entrySet()) {
+            String values = String.join(",", entry.getValue());
+            listHeader.add(new HttpHeader(values,entry.getKey()));
+        }
+
+        mav.addObject("headers",listHeader);
+        return mav;
+    }
+
+
     @RequestMapping(value="/",method = RequestMethod.POST)
-    @ResponseBody
+    ResponseBody
     public String testPost(HttpServletRequest request, @RequestHeader HttpHeaders headers){
 
         return "OK";
